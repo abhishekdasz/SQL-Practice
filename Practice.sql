@@ -1,0 +1,132 @@
+CREATE DATABASE college;
+
+USE college;
+
+CREATE TABLE STUDENT (
+    STUDENT_ID INT PRIMARY KEY,
+    FIRST_NAME VARCHAR(50),
+    LAST_NAME VARCHAR(50),
+    GPA DECIMAL(4, 2),
+    ENROLLMENT_DATE DATETIME,
+    MAJOR VARCHAR(50)
+);
+
+INSERT INTO STUDENT (STUDENT_ID, FIRST_NAME, LAST_NAME, GPA, ENROLLMENT_DATE, MAJOR) VALUES
+(201, 'Shivansh', 'Mahajan', 8.79, '2021-09-01 09:30:00', 'Computer Science'),
+(202, 'Umesh', 'Sharma', 8.44, '2021-09-01 08:30:00', 'Mathematics'),
+(203, 'Rakesh', 'Kumar', 5.60, '2021-09-01 10:00:00', 'Biology'),
+(204, 'Radha', 'Sharma', 9.20, '2021-09-01 12:45:00', 'Chemistry'),
+(205, 'Kush', 'Kumar', 7.85, '2021-09-01 08:30:00', 'Physics'),
+(206, 'Prem', 'Chopra', 9.56, '2021-09-01 09:24:00', 'History'),
+(207, 'Pankaj', 'Vats', 9.78, '2021-09-01 02:30:00', 'English'),
+(208, 'Navleen', 'Kaur', 7.00, '2021-09-01 06:30:00', 'Mathematics');
+
+SELECT * from student;
+
+CREATE TABLE PROGRAM (
+    STUDENT_REF_ID INT PRIMARY KEY,
+    PROGRAM_NAME VARCHAR(50),
+    PROGRAM_START_DATE DATETIME
+);
+
+INSERT INTO PROGRAM (STUDENT_REF_ID, PROGRAM_NAME, PROGRAM_START_DATE) VALUES
+(201, 'Computer Science', '2021-09-01 00:00:00'),
+(202, 'Mathematics', '2021-09-01 00:00:00'),
+(208, 'Mathematics', '2021-09-01 00:00:00'),
+(205, 'Physics', '2021-09-01 00:00:00'),
+(204, 'Chemistry', '2021-09-01 00:00:00'),
+(207, 'Psychology', '2021-09-01 00:00:00'),
+(206, 'History', '2021-09-01 00:00:00'),
+(203, 'Biology', '2021-09-01 00:00:00');
+
+SELECT * from PROGRAM;
+
+CREATE TABLE SCHOLARSHIP (
+    STUDENT_REF_ID INT,
+    SCHOLARSHIP_AMOUNT DECIMAL(10, 2),
+    SCHOLARSHIP_DATE DATETIME
+);
+
+INSERT INTO SCHOLARSHIP (STUDENT_REF_ID, SCHOLARSHIP_AMOUNT, SCHOLARSHIP_DATE) VALUES
+(201, 5000, '2021-10-15 00:00:00'),
+(202, 4500, '2022-08-18 00:00:00'),
+(203, 3000, '2022-01-25 00:00:00'),
+(201, 4000, '2021-10-15 00:00:00');
+
+SELECT * from SCHOLARSHIP;
+
+SELECT MAJOR, COUNT(*) AS NumberOfStudents
+FROM STUDENT
+GROUP BY MAJOR;
+
+SELECT MAJOR, AVG(GPA) AS AverageGPA
+FROM STUDENT
+GROUP BY MAJOR;
+
+SELECT FIRST_NAME, INSTR(FIRST_NAME, 'a') as POSITION FROM Student;
+
+SELECT STUDENT_ID, FIRST_NAME, INSTR(FIRST_NAME, 'an') AS POSITION
+FROM STUDENT;
+
+SELECT DISTINCT MAJOR, LENGTH(MAJOR) AS LENGTH FROM Student;
+
+SELECT REPLACE(FIRST_NAME, 'a', 'A') FROM Student;
+
+SELECT CONCAT(FIRST_NAME,' ',LAST_NAME) AS COMPLETE_NAME FROM Student;
+
+SELECT * FROM Student ORDER BY FIRST_NAME ASC, MAJOR DESC;
+
+SELECT * FROM Student WHERE FIRST_NAME IN('PREM', 'Shivansh');
+
+SELECT * FROM Student WHERE FIRST_NAME NOT IN('PREM', 'Shivansh');
+
+SELECT * FROM Student WHERE FIRST_NAME LIKE '____a';
+
+SELECT Major, COUNT(*) as TOTAL_COUNT FROM Student WHERE MAJOR = 'Computer Science';
+
+SELECT COUNT(*) FROM Student WHERE MAJOR = 'Computer Science';
+
+SELECT Major, COUNT(Major) FROM Student GROUP BY Major;
+
+SELECT MAJOR, COUNT(MAJOR) from Student group by MAJOR order by COUNT(MAJOR) DESC;
+
+SELECT DISTINCT Major, LENGTH(Major) from Student GROUP BY Major;
+
+SELECT COUNT(Major) from Student WHERE Major='Computer Science';
+
+SELECT Major, Count(Major) from Student GROUP BY Major ORDER BY COUNT(Major) DESC;
+
+SELECT 
+    Student.FIRST_NAME,
+    Student.LAST_NAME,
+    COALESCE(Scholarship.SCHOLARSHIP_AMOUNT, NULL) AS SCHOLARSHIP_AMOUNT,
+    COALESCE(Scholarship.SCHOLARSHIP_DATE, NULL) AS SCHOLARSHIP_DATE
+FROM 
+    Student
+LEFT JOIN 
+    Scholarship ON Student.STUDENT_ID = Scholarship.STUDENT_REF_ID;
+    
+SELECT 
+    Student.FIRST_NAME,
+    Student.LAST_NAME,
+    Scholarship.SCHOLARSHIP_AMOUNT,
+    Scholarship.SCHOLARSHIP_DATE
+FROM 
+    Student
+LEFT JOIN 
+    Scholarship ON Student.STUDENT_ID = Scholarship.STUDENT_REF_ID;
+    
+    
+    
+SELECT 
+	STUDENT.FIRST_NAME, 
+    Program.Program_Name, 
+    Program.Program_Start_Date
+FROM 
+	Student
+LEFT JOIN 
+	Program ON Student.STUDENT_ID = Program.STUDENT_REF_ID;
+
+select * from Student ORDER BY GPA DESC LIMIT 5;
+
+select * from Student ORDER BY GPA DESC LIMIT 5,1;
