@@ -129,4 +129,31 @@ LEFT JOIN
 
 select * from Student ORDER BY GPA DESC LIMIT 5;
 
-select * from Student ORDER BY GPA DESC LIMIT 5,1;
+select * from Student ORDER BY GPA DESC LIMIT 4,1;
+
+SELECT * FROM Student s1
+WHERE 5 = (
+    SELECT COUNT(DISTINCT (s2.GPA)) 
+    FROM Student s2
+    WHERE s2.GPA >= s1.GPA
+);
+
+SELECT COUNT(DISTINCT (S1.GPA))
+FROM STUDENT S1; 
+
+SELECT s1.* FROM Student s1, Student s2 WHERE s1.Major = s2.Major AND s1.Student_id != s2.Student_id;
+
+SELECT MAX(GPA) FROM Student
+WHERE GPA NOT IN(SELECT MAX(GPA) FROM Student);
+
+SELECT GPA FROM Student ORDER BY GPA DESC LIMIT 1,1;
+
+SELECT * FROM STUDENT
+UNION ALL 
+SELECT * FROM STUDENT ORDER BY Student_ID;
+
+SELECT FIRST_NAME, GPA from Student;
+
+CREATE VIEW V1 AS Select FIRST_NAME, GPA from Student;
+
+select * from V1;
