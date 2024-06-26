@@ -157,3 +157,7 @@ SELECT FIRST_NAME, GPA from Student;
 CREATE VIEW V1 AS Select FIRST_NAME, GPA from Student;
 
 select * from V1;
+
+select * from Student Where Student_ID <= (select COUNT(STUDENT_ID)/2 from Student);
+
+SELECT * FROM Student WHERE STUDENT_ID <= (SELECT COUNT(STUDENT_ID)/2 FROM Student);
